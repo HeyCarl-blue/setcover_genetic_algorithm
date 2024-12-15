@@ -36,24 +36,30 @@ Mi sono basato sull'algoritmo proposto da J.E. Beasley e P.C. Chu nel loro artic
 I parametri del SCP sono rappresentati nel seguente modo:
 
 - L'insieme universo $I$ e i sottoinsiemi da scegliere $T$ sono rappresentati insieme tramite una matrice $U$ di dimensione $m \times n$ dove $m$ è il numero di elementi dell'insieme universo, e $n$ il numero di sottoinsiemi da poter scegliere. Le colonne di questa matrice sono vettori binari di $m$ elementi:
+
   $$U[i, j] =
   \begin{cases}
   1 & i \in S_j\\
   0 & i \notin S_j
   \end{cases}$$
+
 - Una soluzione al problema del Set Cover è similmente rappresentato da un vettore binario $s$ di $n$ elementi:
+
   $$s[j] = \begin{cases}
   1 & \text{se $S_j$ è incluso nella soluzione} \\
   0 & altrimenti
   \end{cases}$$
+
 - I costi sono un vettore di $n$ elementi che rappresentano il costo associato a ciascun sottoinsieme: $c[j]$ è il costo di includere $S_j$ nella soluzione.
 
 Queste rappresentazioni portano ad una convenienza per il calcolo della funzione obiettivo di una soluzione: basta fare il prodotto puntuale tra il vettore soluzione $s$ e il vettore di costo $c$:
+
 $$f(s) = \sum_{i=1}^n s_ic_i = s \cdot c$$
 
 #### Crossover
 
 Per generare il figlio $c$ a partire dai due genitori $p_1$ e $p_2$, si utilizza un operatore di *fusione*, che tramanda i bit dei genitori al figlio con probabilità relativa alla funzione di fitness del genitore. La fusione è definita nel seguente modo:
+
 $$c[i] = \begin{cases}
 p_1[i] & \text{con probabilità } p = \frac{f(p_2)}{f(p_1) + f(p_2)} \\
 p_2[i] & \text{con probabilità } 1 - p
@@ -62,10 +68,12 @@ p_2[i] & \text{con probabilità } 1 - p
 #### Mutazione
 
 L'operatore di mutazione modifica una soluzione. L'idea è quella di bilanciare *exploitation* e *exploration*. Nell'operatore utilizzato, il risultato voluto è quello di aumentare le modifiche fatte dalla mutazione (exploration) quando l'algoritmo converge. Questo si fa modificando un numero di bit dell'individuo dato dalla seguente formula:
+
 $$\Biggl\lceil{\frac{m_f}{1+e^{-4m_g\frac{t-m_c}{m_f}}}}\Biggr\rceil$$
+
 Dove $m_f$ rappresenta il mutation rate quando l'algoritmo si stabilizza, $m_c$ il numero di figli generati quando si raggiunge un mutation rate di $\frac{m_f}{2}$, e $m_g$ il gradiente quando $t=m_c$, e $t$ il numero di figli generati fino ad ora. Il risultato è quello di aumentare i bit modificati quando l'algoritmo converge:
 
-![](imgs/image.png)
+![](imgs/mutation_graph.png)
 
 Siccome questi bit sono presi a caso, quando si muta una soluzione nel SCP, si introduce un problema: La soluzione potrebbe non essere più ammissibile, perciò è necessario renderla ammissibile tramite un processo chiamato *Heuristic feasibility operator*, illustrato nell'[articolo](https://www.sciencedirect.com/science/article/abs/pii/037722179500159X). Riassunto:
 
