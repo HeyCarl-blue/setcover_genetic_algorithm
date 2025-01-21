@@ -37,24 +37,24 @@ I parametri del SCP sono rappresentati nel seguente modo:
 
 - L'insieme universo $I$ e i sottoinsiemi da scegliere $T$ sono rappresentati insieme tramite una matrice $U$ di dimensione $m \times n$ dove $m$ è il numero di elementi dell'insieme universo, e $n$ il numero di sottoinsiemi da poter scegliere. Le colonne di questa matrice sono vettori binari di $m$ elementi:
   
-  $$
+$$
   U[i, j] =
 \begin{cases}
 1 & i \in S_j\\
 0 & i \notin S_j
 \end{cases}
-  $$
+$$
   
   
 
 - Una soluzione al problema del Set Cover è similmente rappresentato da un vettore binario $s$ di $n$ elementi:
   
-  $$
+$$
   s[j] = \begin{cases}
 1 & \text{se $S_j$ è incluso nella soluzione} \\
 0 & altrimenti
 \end{cases}
-  $$
+$$
 
 - I costi sono un vettore di $n$ elementi che rappresentano il costo associato a ciascun sottoinsieme: $c[j]$ è il costo di includere $S_j$ nella soluzione.
 
@@ -92,11 +92,10 @@ Dove $m_f$ rappresenta il mutation rate quando l'algoritmo si stabilizza, $m_c$ 
 Siccome questi bit sono presi a caso, quando si muta una soluzione nel SCP, si introduce un problema: La soluzione potrebbe non essere più ammissibile, perciò è necessario renderla ammissibile tramite un processo chiamato *Heuristic feasibility operator*, illustrato nell'[articolo](https://www.sciencedirect.com/science/article/abs/pii/037722179500159X). Riassunto:
 
 1. Trova gli elementi non inclusi nella soluzione
-2. Aggiungi colonne alla soluzione minimizzando l'euristica 
-   
-   $$
-   \frac{\text{costo della colonna}}{\text{numero di elementi che il sottoinsieme contiene}}
-   $$
+2. Aggiungi colonne alla soluzione minimizzando l'euristica
+$$
+\frac{\text{costo della colonna}}{\text{numero di elementi che il sottoinsieme contiene}}
+$$
 3. Rimuovi le colonne ridondanti, iniziando da quelle di costo maggiore
 
 #### Generare la Mating Pool
