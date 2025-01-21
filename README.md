@@ -96,6 +96,7 @@ Siccome questi bit sono presi a caso, quando si muta una soluzione nel SCP, si i
 3. Rimuovi le colonne ridondanti, iniziando da quelle di costo maggiore
 
 Euristica:
+
 $$
 \frac{\text{costo della colonna}}{\text{numero di elementi che il sottoinsieme contiene}}
 $$
